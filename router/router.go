@@ -12,6 +12,7 @@ func Route(v1 *gin.RouterGroup, prd *product.Service) {
 	product := v1.Group("/product")
 	{
 		product.POST("/add-to-cart", handler.AddToCart)
+		product.POST("/add", handler.Add)
 		product.POST("/checkout", handler.Checkout)
 	}
 }

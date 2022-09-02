@@ -9,9 +9,9 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func (handler *Controller) AddToCart(ctx *gin.Context) {
-	var input model.Cart
-	err := pkg.ValidateRequest(pkg.BIND_TYPE_JSON, "Add To Cart", ctx, &input)
+func (handler *Controller) Add(ctx *gin.Context) {
+	var input model.Add
+	err := pkg.ValidateRequest(pkg.BIND_TYPE_JSON, "Add Data", ctx, &input)
 	if err != nil {
 		pkg.Response(ctx, &presenter.Response{
 			Code:    err.Code,
@@ -20,9 +20,10 @@ func (handler *Controller) AddToCart(ctx *gin.Context) {
 		return
 	}
 
-	handler.prd.AddToCart(input)
+	handler.prd.Create(input)
 	pkg.Response(ctx, &presenter.Response{
 		Code: http.StatusOK,
-		Message: "Successfully Add To Cart",
+		Message: "Successfully Create Product",
 	})
+
 }
