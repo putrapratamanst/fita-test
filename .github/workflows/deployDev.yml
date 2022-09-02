@@ -1,0 +1,29 @@
+name: Docker
+
+on:
+  pull_request:
+    branches:
+      - staging
+    types: [closed]
+  release:
+    types:
+      - created
+    branches:
+      - development
+    tags:
+      - "v*"
+jobs:
+  deploy:
+    name: Setup Deployment
+    runs-on: ubuntu-latest
+    env:
+      IMAGE_NAME: fita-test
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Decode .env
+        run: echo ${{ secrets.ENV_BASE64 }} | base64 -d > .env
+
+      - name: Build Docker image
+        run: docker-compose build
